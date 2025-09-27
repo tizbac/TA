@@ -296,6 +296,14 @@ local options = {
     section = "ta_exp",
   },
   {
+    key = "research",
+    name = "Research Tech Mode",
+    desc = "Use research scheme to tech UP",
+    type = "bool",
+    def = true,
+    section = "ta_modes",
+  },
+  {
     key = "expscaleenabled",
     name = "Experience health/power/reload scaling",
     desc = "",

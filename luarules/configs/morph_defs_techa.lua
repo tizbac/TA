@@ -27,7 +27,7 @@ local morphDefs = {
       {
           into = 'armcom1',
           time = 60,
-          tech = 1
+          tech = 1 and Spring.GetModOptions().research or nil
       },
       {
           into = 'armcom',
@@ -40,7 +40,7 @@ local morphDefs = {
       {
           into = 'armcom2',
           time = 90,
-          tech = 2
+          tech = 2 and Spring.GetModOptions().research or nil
       },
       {
           into = 'armcom1',
@@ -53,7 +53,7 @@ local morphDefs = {
       {
           into = 'armcom3',
           time = 180,
-          tech = 3
+          tech = 3 and Spring.GetModOptions().research or nil
       },
       {
           into = 'armcom2',
@@ -77,7 +77,7 @@ local morphDefs = {
       {
           into = 'talon_com1',
           time = 60,
-          tech = 1
+          tech = 1 and Spring.GetModOptions().research or nil
       },
       {
           into = 'talon_com',
@@ -90,7 +90,7 @@ local morphDefs = {
       {
           into = 'talon_com2',
           time = 90,
-          tech = 2
+          tech = 2 and Spring.GetModOptions().research or nil
       },
       {
           into = 'talon_com1',
@@ -103,7 +103,7 @@ local morphDefs = {
       {
           into = 'talon_com3',
           time = 180,
-          tech = 3
+          tech = 3 and Spring.GetModOptions().research or nil
       },
       {
           into = 'talon_com2',
@@ -127,7 +127,7 @@ local morphDefs = {
       {
           into = 'gok_com1',
           time = 60,
-          tech = 1
+          tech = 1 and Spring.GetModOptions().research or nil
       },
       {
           into = 'gok_com',
@@ -140,7 +140,7 @@ local morphDefs = {
       {
           into = 'gok_com2',
           time = 90,
-          tech = 2
+          tech = 2 and Spring.GetModOptions().research or nil
       },
       {
           into = 'gok_com1',
@@ -153,7 +153,7 @@ local morphDefs = {
       {
           into = 'gok_com3',
           time = 180,
-          tech = 3
+          tech = 3 and Spring.GetModOptions().research or nil
       },
       {
           into = 'gok_com2',
@@ -177,7 +177,7 @@ local morphDefs = {
       {
           into = 'corcom1',
           time = 60,
-          tech = 1
+          tech = 1 and Spring.GetModOptions().research or nil
       },
       {
           into = 'corcom',
@@ -190,7 +190,7 @@ local morphDefs = {
       {
           into = 'corcom2',
           time = 90,
-          tech = 2
+          tech = 2 and Spring.GetModOptions().research or nil
       },
       {
           into = 'corcom1',
@@ -203,7 +203,7 @@ local morphDefs = {
       {
           into = 'corcom3',
           time = 180,
-          tech = 3
+          tech = 3 and Spring.GetModOptions().research or nil
       },
       {
           into = 'corcom2',
@@ -227,7 +227,7 @@ local morphDefs = {
       {
           into = 'tllcom1',
           time = 60,
-          tech = 1
+          tech = 1 and Spring.GetModOptions().research or nil
       },
       {
           into = 'tllcom',
@@ -240,7 +240,7 @@ local morphDefs = {
       {
           into = 'tllcom2',
           time = 90,
-          tech = 2
+          tech = 2 and Spring.GetModOptions().research or nil
       },
       {
           into = 'tllcom1',
@@ -253,7 +253,7 @@ local morphDefs = {
       {
           into = 'tllcom3',
           time = 180,
-          tech = 3
+          tech = 3 and Spring.GetModOptions().research or nil
       },
       {
           into = 'tllcom2',
@@ -277,7 +277,7 @@ local morphDefs = {
       {
           into = 'rumad_com1',
           time = 60,
-          tech = 1
+          tech = 1 and Spring.GetModOptions().research or nil
       },
       {
           into = 'rumad_com',
@@ -290,7 +290,7 @@ local morphDefs = {
       {
           into = 'rumad_com2',
           time = 90,
-          tech = 2
+          tech = 2 and Spring.GetModOptions().research or nil
       },
       {
           into = 'rumad_com1',
@@ -303,7 +303,7 @@ local morphDefs = {
       {
           into = 'rumad_com3',
           time = 180,
-          tech = 3
+          tech = 3 and Spring.GetModOptions().research or nil
       },
       {
           into = 'rumad_com2',

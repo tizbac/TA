@@ -909,8 +909,8 @@ function gadget:Initialize()
       for _,morphDef in pairs(morphDefSet) do
         if (morphDef) then
           local cmdDescID = SpFindUnitCmdDesc(unitID, morphDef.cmd)
-          if (not cmdDescID) then
-            AddMorphCmdDesc(unitID, unitDefID, teamID, morphDef, teamTechLevel[teamID])
+          if ((not cmdDescID) and (morphDef.research == nil or Spring.GetModOptions().research)) then
+            AddMorphCmdDesc(unitID, unitDefID, teamID, morphDef, teamTechLevel[teamID] or 0)
           end
 
           useXPMorph = (morphDef.xp>0) or useXPMorph
@@ -959,8 +959,8 @@ function gadget:UnitCreated(unitID, unitDefID, teamID)
   if (morphDefSet) then
     local useXPMorph = false
     for _,morphDef in pairs(morphDefSet) do
-      if (morphDef) then
-        AddMorphCmdDesc(unitID, unitDefID, teamID, morphDef, teamTechLevel[teamID])
+      if (morphDef and (morphDef.research == nil or Spring.GetModOptions().research)) then
+        AddMorphCmdDesc(unitID, unitDefID, teamID, morphDef, teamTechLevel[teamID] or 0)
         useXPMorph = (morphDef.xp>0) or useXPMorph
       end
     end
@@ -1072,6 +1072,16 @@ end
 
 --- Function to add a new factory to the system
 function AddFactory(unitID, unitDefID, teamID)
+    if not Spring.GetModOptions().research then
+      if (isFactory(unitDefID)) then
+        local unitTechLevel = GetTechLevel(unitDefID)
+        if (unitTechLevel > teamTechLevel[teamID]) then
+          teamTechLevel[teamID]=unitTechLevel
+        end
+      end
+
+      return
+    end
     if isFactory(unitDefID) then
         local unitTechLevel = GetTechLevel(unitDefID)
         local teamTech = teamTechLevel[teamID] or 0
@@ -1099,24 +1109,25 @@ end
 
 function RemoveFactory(unitID, unitDefID, teamID)
   if (devolution)and(isFactory(unitDefID))and(isFinished(unitID)) then
-
-    --// check all factories and determine team level
-    local level = 0
-    local teamUnits = SpGetTeamUnits(teamID)
-    for i=1,#teamUnits do
-      local unitID2 = teamUnits[i]
-      if (unitID2 ~= unitID) then
-        local unitDefID2 = SpGetUnitDefID(unitID2)
-        if (isFactory(unitDefID2) and isFinished(unitID2)) then
-          local unitTechLevel = GetTechLevel(unitDefID2)
-          if (unitTechLevel>level) then level = unitTechLevel end
+    if not Spring.GetModOptions().research then
+      --// check all factories and determine team level
+      local level = 0
+      local teamUnits = SpGetTeamUnits(teamID)
+      for i=1,#teamUnits do
+        local unitID2 = teamUnits[i]
+        if (unitID2 ~= unitID) then
+          local unitDefID2 = SpGetUnitDefID(unitID2)
+          if (isFactory(unitDefID2) and isFinished(unitID2)) then
+            local unitTechLevel = GetTechLevel(unitDefID2)
+            if (unitTechLevel>level) then level = unitTechLevel end
+          end
         end
       end
+    
+      if (level ~= teamTechLevel[teamID]) then
+        teamTechLevel[teamID] = level
+      end
     end
-
---    if (level ~= teamTechLevel[teamID]) then
---      teamTechLevel[teamID] = level
---    end
 
   end
 end
@@ -1259,7 +1270,7 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
         (morphDef.xp<=SpGetUnitExperience(unitID))and
         (UnitReqCheck(teamID, morphDef.require)) )
     then
-      if(morphDef.research and morphDef.research <= teamTechLevel[teamID])
+      if( (morphDef.research and not Spring.GetModOptions().research ) or (morphDef.research and morphDef.research <= teamTechLevel[teamID]))
     then
         return false
     end

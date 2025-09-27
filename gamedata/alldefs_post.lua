@@ -251,6 +251,25 @@ end
 -- MODOPTIONS
 -------------------------
 -- process modoptions (last, because they should not get baked)
+
+local function GetTechLevelU(UD)
+  --return UnitDefs[UnitDefID].techLevel or 0
+  local cats = UD.modCategories
+  if (cats) then
+    --// bugfix, cuz lua don't remove uppercase :(
+    if     (cats["LEVEL1"]) then return 1
+    elseif (cats["LEVEL2"]) then return 2
+    elseif (cats["LEVEL3"]) then return 3
+    elseif (cats["LEVEL4"]) then return 4
+    elseif (cats["level1"]) then return 1
+    elseif (cats["level2"]) then return 2
+    elseif (cats["level3"]) then return 3
+    elseif (cats["level4"]) then return 4
+    end
+  end
+  return 0
+end
+
 function ModOptions_Post(UnitDefs, WeaponDefs)
 	if (Spring.GetModOptions) then
 		local modOptions = Spring.GetModOptions()
@@ -274,6 +293,18 @@ function ModOptions_Post(UnitDefs, WeaponDefs)
 			if wd.shieldenergyuse then
 				wd.shieldenergyuse = 0
 			end
+		end
+
+		if modOptions.research then 
+			for name, ud in pairs(UnitDefs) do
+				if ud.isFactory and GetTechLevelU(ud) > 1 then
+					ud.buildcostmetal = ud.buildcostmetal / 3
+					ud.buildtime = ud.buildtime / 3
+					ud.featuredefs.dead1.metal = ud.featuredefs.dead1.metal / 3
+					ud.featuredefs.heap1.metal = ud.featuredefs.heap1.metal / 3
+				end
+			end
+
 		end
 	end
 end
